@@ -1,0 +1,20 @@
+html(ng-app="myApp")
+  head
+    link(rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css")
+    link(rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css")
+    script(src="bower_components/jquery/dist/jquery.js")
+    script(src="bower_components/bootstrap/dist/js/bootstrap.js")
+    script(src="bower_components/angular/angular.js")
+    script(src="bower_components/angular-bootstrap/ui-bootstrap.js")
+    script(src="main.js")
+
+  body
+    #test(ng-controller="test")
+      table
+        tr(ng-repeat="d in data")
+          tr {{d.name}}
+          tr {{d.value}}
+    #apps 1+1={{1+1}}
+    #instances
+      | 2+2={{2+2}}
+
