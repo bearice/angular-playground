@@ -6,15 +6,13 @@ html(ng-app="myApp")
     script(src="bower_components/bootstrap/dist/js/bootstrap.js")
     script(src="bower_components/angular/angular.js")
     script(src="bower_components/angular-bootstrap/ui-bootstrap.js")
+    script(src="bower_components/underscore/underscore.js")
     script(src="main.js")
 
   body
     #test(ng-controller="test")
-      table
+      table.table.table-hover
         tr(ng-repeat="d in data")
-          tr {{d.name}}
-          tr {{d.value}}
-    #apps 1+1={{1+1}}
-    #instances
-      | 2+2={{2+2}}
+          td {{d.name}}
+          td {{d.value}}
 
