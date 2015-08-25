@@ -1,0 +1,11 @@
+table.table.table-hover.table-bordered(ts-wrapper)
+  tr
+    th(ts-criteria="id") Id
+    th(ts-criteria="raw.Name") Name
+    th(ts-criteria="host") Host
+    th(ts-criteria="raw.Image") Image
+  tr(ng-repeat="i in instances", ts-repeat)
+    td {{i.id.substr(0,8)}}
+    td {{i.raw.Name}}
+    td {{i.host}}
+    td {{i.raw.Image}}

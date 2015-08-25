@@ -1,0 +1,17 @@
+table.table.table-hover.table-bordered(ts-wrapper)
+  tr
+    th(ts-criteria="Name",ts-default) Name
+    th(ts-criteria="Version.Version") Version
+    th(ts-criteria="Containers") Containers
+    th(ts-criteria="MemTotal") Memory
+    th(ts-criteria="MemoryUsed") Memory Used
+    th(ts-criteria="MemoryAllocated") Memory Allocated
+    th(ts-criteria="CPUPercent") CPU Usage
+  tr(ng-repeat="s in servers", ts-repeat)
+    td {{s.Name}}
+    td {{s.Version.Version}}
+    td.right {{s.Containers}}
+    td.right {{s.MemTotal | byteFmt:2}}
+    td.right {{s.MemoryUsed | byteFmt:2}}
+    td.right {{s.MemoryAllocated | byteFmt:2}}
+    td.right {{s.CPUPercent | percent:1:true}}%
