@@ -1,4 +1,4 @@
-html(ng-app="daikonApp")
+html(ng-app="daikonApp",ng-controller="RootCtrl")
   head
     base(href="/daikon/")
     meta(http-equiv="Content-Type" content="text/html;charset=UTF-8")
@@ -22,11 +22,16 @@ html(ng-app="daikonApp")
     script(src="bower_components/angular-loading-bar/build/loading-bar.js")
     script(src="bower_components/underscore/underscore.js")
     script(src="scripts/main.js")
+    title(ng-bind='title')
 
-  body(ng-controller="RootCtrl")
-    #nav(ng-controller="NavCtrl")
-      .btn-group
-        a.btn.btn-primary(ng-href="app/list") Apps
-        a.btn.btn-primary(ng-href="instance/list") Instances
-        a.btn.btn-primary(ng-href="server/list") Servers
-    #main(ng-view)
+  body
+    #nav.navbar.navbar-default
+      .container-fluid
+        a.navbar-brand(href="home") Daikon
+        #title.navbar-left.navbar-text(ng-bind='title')
+        #action.btn-group.navbar-right
+          a.btn.navbar-btn(ng-href="app/list") Apps
+          a.btn.navbar-btn(ng-href="instance/list") Instances
+          a.btn.navbar-btn(ng-href="server/list") Servers
+
+    #main.container-fluid(ng-view)
