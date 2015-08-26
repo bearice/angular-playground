@@ -1,11 +1,17 @@
 table.table.table-hover.table-bordered(ts-wrapper)
   tr
     th(ts-criteria="id") Id
-    th(ts-criteria="raw.Name") Name
+    th(ts-criteria="raw.Name",ts-default) Name
     th(ts-criteria="host") Host
-    th(ts-criteria="raw.Image") Image
+    th(ts-criteria="raw.Config.Image") Image
+    th(ts-criteria="raw.State.StartedAt") Started At
   tr(ng-repeat="i in instances", ts-repeat)
-    td {{i.id.substr(0,8)}}
+    td
+      a(ng-href="instance/{{i.id}}") {{i.id.substr(0,8)}}
     td {{i.raw.Name}}
-    td {{i.host}}
-    td {{i.raw.Image}}
+    td
+      a(ng-href="server/{{i.host}}") {{i.host}}
+    td {{i.raw.Config.Image}}
+    td(alt="{{i.raw.State.StartedAt}}")
+      span(am-time-ago="i.raw.State.StartedAt")
+

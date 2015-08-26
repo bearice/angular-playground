@@ -1,4 +1,12 @@
-myApp = angular.module 'daikonApp',['ngRoute','ui.bootstrap','angular.filter','tableSort']
+myApp = angular.module 'daikonApp',[
+  'ngRoute',
+  'ui.bootstrap',
+  'angular.filter',
+  'tableSort',
+  'jsonFormatter',
+  'angularMoment',
+  'angular-loading-bar',
+]
 
 baseURL = "https://node-34.etcd.zhaowei.jimubox.com:2379/v2/keys"
 getNodes = (pfix,node,a)->
@@ -15,20 +23,38 @@ etcdGet = ($http,path) ->
   $http.get(baseURL+path, params: {recursive: true}).then (resp) ->
     getNodes path+"/", resp.data.node
 
-myApp.config ($route)->
-  $route.when '/instance/list',
+myApp.config ($routeProvider,$locationProvider)->
+  $routeProvider
+  .when '/instance/list',
     templateUrl: 'templates/instances.html'
     controller: 'InstanceListCtrl'
     controllerAs: 'instances'
-  .when '/apps/list',
+  .when '/instance/:id',
+    templateUrl: 'templates/jsonview.html'
+    controller: 'InstanceInfoCtrl'
+    controllerAs: 'instance'
+  .when '/app/list',
     templateUrl: 'templates/apps.html'
     controller: 'AppListCtrl'
     controllerAs: 'apps'
-  .when '/servers/list',
+  .when '/server/list',
     templateUrl: 'templates/servers.html'
     controller: 'ServerListCtrl'
     controllerAs: 'servers'
+  .when '/server/:name',
+    templateUrl: 'templates/jsonview.html'
+    controller: 'ServerInfoCtrl'
+    controllerAs: 'server'
+  .otherwise redirectTo: '/app/list'
 
+  $locationProvider.html5Mode true
+
+myApp.controller 'RootCtrl', ($scope, $route, $routeParams, $location) ->
+  $scope.$on '$routeChangeSuccess', (e)->
+    current = $route.current
+    console.log "ROUTE CHANGE: [ %s ] .. [ Path: %s ]",current.originalPath,$location.path()
+
+myApp.controller 'NavCtrl', ($scope,$http,$location) ->
 
 myApp.controller 'InstanceListCtrl', ($scope,$http) ->
   etcdGet($http,"/docker/instances").then (data)->
@@ -55,3 +81,12 @@ myApp.controller 'ServerListCtrl', ($scope,$http) ->
       o = JSON.parse x.value
       o.Name = x.name
       return o
+
+myApp.controller 'ServerInfoCtrl', ($scope,$http,$routeParams) ->
+  etcdGet($http,"/docker/servers/#{$routeParams.name}").then (data)->
+    $scope.data = JSON.parse data[0].value
+
+myApp.controller 'InstanceInfoCtrl', ($scope,$http,$routeParams) ->
+  etcdGet($http,"/docker/instances/#{$routeParams.id}/raw").then (data)->
+    $scope.data = JSON.parse data[0].value
+

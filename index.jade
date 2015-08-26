@@ -1,22 +1,32 @@
 html(ng-app="daikonApp")
   head
+    base(href="/daikon/")
+    meta(http-equiv="Content-Type" content="text/html;charset=UTF-8")
     link(rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css")
     link(rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css")
     link(rel="stylesheet",href="bower_components/angular-bootstrap/ui-bootstrap-csp.css")
     link(rel="stylesheet",href="bower_components/angular-tablesort/tablesort.css")
+    link(rel="stylesheet",href="bower_components/json-formatter/dist/json-formatter.css")
+    link(rel="stylesheet",href="bower_components/angular-loading-bar/build/loading-bar.css")
     link(rel="stylesheet",href="main.css")
     script(src="bower_components/jquery/dist/jquery.js")
+    script(src="bower_components/moment/moment.js")
     script(src="bower_components/bootstrap/dist/js/bootstrap.js")
     script(src="bower_components/angular/angular.js")
+    script(src="bower_components/angular-route/angular-route.js")
     script(src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js")
     script(src="bower_components/angular-filter/dist/angular-filter.js")
     script(src="bower_components/angular-tablesort/js/angular-tablesort.js")
+    script(src="bower_components/json-formatter/dist/json-formatter.js")
+    script(src="bower_components/angular-moment/angular-moment.js")
+    script(src="bower_components/angular-loading-bar/build/loading-bar.js")
     script(src="bower_components/underscore/underscore.js")
     script(src="scripts/main.js")
 
-  body
-    tabset#nav(justified="false")
-      tab#apps(heading="Apps")
-      tab#instances(heading="Instances")
-      tab#servers(heading="Servers")
+  body(ng-controller="RootCtrl")
+    #nav(ng-controller="NavCtrl")
+      .btn-group
+        a.btn.btn-primary(ng-href="app/list") Apps
+        a.btn.btn-primary(ng-href="instance/list") Instances
+        a.btn.btn-primary(ng-href="server/list") Servers
     #main(ng-view)

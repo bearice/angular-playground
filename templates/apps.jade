@@ -1,16 +1,17 @@
 table.table.table-hover.table-bordered(ts-wrapper)
   tr
+    th(ts-criteria="id") Id
     th(ts-criteria="env", ts-default) Env
     th(ts-criteria="app") App
     th(ts-criteria="term") Term
     th(ts-criteria="instance") Instance
     th(ts-criteria="node") Host
-    th(ts-criteria="id") Id
   tr(ng-repeat="d in apps", ts-repeat)
+    td {{d.id.substr(0,8)}}
     td {{d.env}}
     td {{d.app}}
     td {{d.term}}
     td
-      a(href="#i_{{d.id}}") {{d.instance}}
-    td {{d.node}}
-    td {{d.id.substr(0,8)}}
+      a(ng-href="instance/{{d.id}}") {{d.instance}}
+    td
+      a(ng-href="server/{{d.node}}") {{d.node}}
