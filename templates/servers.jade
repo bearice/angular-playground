@@ -19,6 +19,6 @@ table.table.table-hover.table-bordered(ts-wrapper)
     td.right {{s.MemTotal | byteFmt:2}}
     td.right {{s.MemoryUsed | byteFmt:2}}
     td.right {{s.MemoryAllocated | byteFmt:2}}
-    td.right {{s.CPUPercent | percent:1:true}}%
+    td.right {{s.CPUPercent | percent:100:true}}%
     td(title="{{s.SystemTime}}")
       span(am-time-ago="s.SystemTime")
