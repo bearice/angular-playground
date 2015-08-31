@@ -5,6 +5,7 @@ table.table.table-hover.table-bordered(ts-wrapper)
     th(ts-criteria="host") Host
     th(ts-criteria="raw.Config.Image") Image
     th(ts-criteria="raw.State.StartedAt") Started At
+    th(ts-criteria="raw.LastSeen") Last Report
   tr(ng-repeat="i in instances", ts-repeat)
     td
       a(ng-href="instance/{{i.id}}") {{i.id.substr(0,8)}}
@@ -12,6 +13,7 @@ table.table.table-hover.table-bordered(ts-wrapper)
     td
       a(ng-href="server/{{i.host}}") {{i.host}}
     td {{i.raw.Config.Image}}
-    td(alt="{{i.raw.State.StartedAt}}")
+    td(title="{{i.raw.State.StartedAt}}")
       span(am-time-ago="i.raw.State.StartedAt")
-
+    td(title="{{i.raw.LastSeen}}")
+      span(am-time-ago="i.raw.LastSeen")

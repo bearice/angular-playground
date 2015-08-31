@@ -8,6 +8,8 @@ table.table.table-hover.table-bordered(ts-wrapper)
     th(ts-criteria="MemoryUsed") Memory Used
     th(ts-criteria="MemoryAllocated") Memory Allocated
     th(ts-criteria="CPUPercent") CPU Usage
+    th(ts-criteria="SystemTime") Last Report
+
   tr(ng-repeat="s in servers", ts-repeat)
     td
       a(ng-href="server/{{s.Name}}") {{s.Name}}
@@ -18,3 +20,5 @@ table.table.table-hover.table-bordered(ts-wrapper)
     td.right {{s.MemoryUsed | byteFmt:2}}
     td.right {{s.MemoryAllocated | byteFmt:2}}
     td.right {{s.CPUPercent | percent:1:true}}%
+    td(title="{{s.SystemTime}}")
+      span(am-time-ago="s.SystemTime")
