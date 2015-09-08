@@ -1,2 +1,9 @@
 .right { text-align: right; }
 table{font-family: monospace;}
+body {
+    padding-top: 70px;
+    padding-bottom: 20px;
+}
+.navbar {
+    margin-bottom: 20px;
+}

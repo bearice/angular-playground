@@ -25,13 +25,27 @@ html(ng-app="daikonApp",ng-controller="RootCtrl")
     title(ng-bind='title')
 
   body
-    #nav.navbar.navbar-default
-      .container-fluid
-        a.navbar-brand(href="home") Daikon
-        #title.navbar-left.navbar-text(ng-bind='title')
-        #action.btn-group.navbar-right
-          a.btn.navbar-btn(ng-href="app/list") Apps
-          a.btn.navbar-btn(ng-href="instance/list") Instances
-          a.btn.navbar-btn(ng-href="server/list") Servers
+    .container
+      nav.navbar.navbar-default.navbar-fixed-top
+        .container-fluid
+          .navbar-header
+            a.navbar-brand(href="home") Daikon
+          #navbar.navbar-collapse.collapse
+            ul.nav.navbar-nav.navbar-left
+              li
+                a(ng-href="app/list") Apps
+              li
+                a(ng-href="instance/list") Instances
+              li
+                a(ng-href="server/list") Servers
+              li
+                #title.navbar-text >>
+                  span(ng-bind='title')
+            ul.nav.navbar-nav.navbar-right
+              li(ng-class="{active:autoReload}")
+                a#autoreload.glyphicon.glyphicon-time(ng-click="toggleAutoReload()")
+                  span(ng-if="autoReload" ng-bind="countdown")
+              li
+                a#reload.glyphicon.glyphicon-refresh(ng-click="$emit('reload')")
 
-    #main.container-fluid(ng-view)
+      #main.container-fluid(ng-view)
