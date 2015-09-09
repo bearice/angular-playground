@@ -4,10 +4,10 @@ table.table.table-hover.table-bordered(ts-wrapper)
     th(ts-criteria="Version.Version") Version
     th(ts-criteria="Containers") Containers
     th(ts-criteria="NCPU") CPUs
+    th(ts-criteria="CPUPercent") CPU Usage
     th(ts-criteria="MemTotal") Memory
     th(ts-criteria="MemoryUsed") Memory Used
     th(ts-criteria="MemoryAllocated") Memory Allocated
-    th(ts-criteria="CPUPercent") CPU Usage
     th(ts-criteria="SystemTime") Last Report
 
   tr(ng-repeat="s in servers", ts-repeat)
@@ -16,9 +16,13 @@ table.table.table-hover.table-bordered(ts-wrapper)
     td {{s.Version.Version}}
     td.right {{s.Containers}}
     td.right {{s.NCPU}}
+    td.right
+      progressbar.progress-striped(value="s.CPUPercent | percent:100:true",max="s.NCPU*100")
+        span {{s.CPUPercent | percent:100:true}}%
     td.right {{s.MemTotal | byteFmt:2}}
-    td.right {{s.MemoryUsed | byteFmt:2}}
+    td.right
+      progressbar.progress-striped(value="s.MemoryUsed | percent:s.MemTotal:true")
+        span {{s.MemoryUsed | byteFmt:2}}/{{s.MemTotal | byteFmt:2}}
     td.right {{s.MemoryAllocated | byteFmt:2}}
-    td.right {{s.CPUPercent | percent:100:true}}%
     td(title="{{s.SystemTime}}")
       span(am-time-ago="s.SystemTime")
