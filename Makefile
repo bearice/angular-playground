@@ -3,6 +3,9 @@ TARGETS+=$(patsubst %.jade,%.html,$(shell find . -name \*.jade))
 
 all: $(TARGETS)
 
+clean:
+	rm -rf $(TARGETS)
+
 %.html: %.jade
 	jade --pretty $<
 
