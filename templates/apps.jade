@@ -1,8 +1,8 @@
 table.table.table-hover.table-bordered(ts-wrapper)
   tr
     th(ts-criteria="id") Id
-    th(ts-criteria="env", ts-default) Env
-    th(ts-criteria="app") App
+    th(ts-criteria="env+app", ts-default) Env
+    th(ts-criteria="app+env") App
     th(ts-criteria="term") Term
     th(ts-criteria="instance") Instance
     th(ts-criteria="node") Host
