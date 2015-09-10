@@ -1,0 +1,68 @@
+accordion#server-info.row(close-others="false")
+  .row.table-row
+    #genernal.col-md-12.table-grid
+      accordion-group(heading="Genernal",panel-class="panel-primary",is-open="true")
+        dl.dl-horizontal
+          dt Name:
+          dd
+            span {{raw.Name}}
+
+          dt Endpoint:
+          dd
+            span {{raw.Endpoint}}
+
+          dt CPU Count:
+          dd
+            span {{raw.NCPU}}
+
+          dt CPU Usage:
+          dd
+            progressbar.progress-striped.active(value="raw.CPUPercent | percent:100:true",max="raw.NCPU*100")
+              span {{raw.CPUPercent | percent:100:true}}%
+
+          dt Memory:
+          dd
+            span {{raw.MemTotal | byteFmt: 2}}
+
+          dt Memory Usage:
+          dd
+            progressbar.progress-striped.active(value="raw.MemoryUsed | percent:raw.MemTotal:true")
+              span {{raw.MemoryUsed | byteFmt:2}}/{{raw.MemTotal | byteFmt:2}}
+
+          dt Memory Allocated:
+          dd
+            span {{raw.MemoryAllocated | byteFmt: 2}}
+
+          dt Containers:
+          dd
+            span {{raw.Containers}}
+
+          dt System Time:
+          dd
+            span {{raw.SystemTime| amDateFormat:'YYYY-MM-DD HH:mm:ss' }}
+
+          dt Operating System:
+          dd
+            span {{raw.OperatingSystem}}
+
+          dt System Arch:
+          dd
+            span {{raw.Version.Arch}}
+
+          dt Kernel Version:
+          dd
+            span {{raw.KernelVersion}}
+
+          dt Docker Version:
+          dd
+            span {{raw.Version.Version}}
+
+          dt Docker API Version:
+          dd
+            span {{raw.Version.ApiVersion}}
+
+  .row.table-row
+    #raw.col-md-12.table-grid
+      accordion-group(heading="Raw",is-open="true")
+        json-formatter(json="raw",open="0")
+

@@ -7,3 +7,33 @@ body {
 .navbar {
     margin-bottom: 20px;
 }
+
+.pre-reset {
+    border: none;
+    padding: 0;
+    margin: auto;
+    background: 0;
+}
+
+.progress {
+    margin-bottom: 0;
+}
+
+.progress-bar span {
+    white-space: nowrap;
+}
+
+#instance-info .panel-body {
+    overflow-x: scroll;
+}
+
+#server-info #genernal .panel-body {
+    -webkit-column-count: 2;
+    column-count: 2;
+}
+
+.table-grid {
+}
+.table-row {
+    margin-bottom: 15px;
+}

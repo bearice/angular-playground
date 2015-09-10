@@ -1,5 +1,6 @@
 myApp = angular.module 'daikonApp',[
   'ngRoute',
+  'ngSanitize',
   'ui.bootstrap',
   'angular.filter',
   'tableSort',
@@ -23,7 +24,8 @@ etcdGet = ($http,path) ->
   $http.get(baseURL+path, params: {recursive: true}).then (resp) ->
     getNodes path+"/", resp.data.node
 
-myApp.config ($routeProvider,$locationProvider)->
+myApp.config ($routeProvider,$locationProvider,$sceProvider)->
+  $sceProvider.enabled false
   $locationProvider.html5Mode true
   $routeProvider
   .when '/instance/list',
@@ -31,7 +33,7 @@ myApp.config ($routeProvider,$locationProvider)->
     controller: 'InstanceListCtrl'
     controllerAs: 'instances'
   .when '/instance/:id',
-    templateUrl: 'templates/jsonview.html'
+    templateUrl: 'templates/instance-info.html'
     controller: 'InstanceInfoCtrl'
     controllerAs: 'instance'
   .when '/app/list',
@@ -43,7 +45,7 @@ myApp.config ($routeProvider,$locationProvider)->
     controller: 'ServerListCtrl'
     controllerAs: 'servers'
   .when '/server/:name',
-    templateUrl: 'templates/jsonview.html'
+    templateUrl: 'templates/server-info.html'
     controller: 'ServerInfoCtrl'
     controllerAs: 'server'
   .when '/home',
@@ -68,7 +70,7 @@ myApp.controller 'RootCtrl', ($scope,Page) ->
 
   $scope.autoReload = false
   $scope.toggleAutoReload = ->
-    console.info $scope.autoReload = !$scope.autoReload
+    $scope.autoReload = !$scope.autoReload
     clearTimeout timer if timer
     if $scope.autoReload
       $scope.countdown = 5
@@ -122,15 +124,31 @@ myApp.controller 'ServerInfoCtrl', ($scope,$http,$routeParams,$rootScope,Page) -
   Page.setTitle "Server Info"
   $scope.reload = ->
     etcdGet($http,"/docker/servers/#{$routeParams.name}").then (data)->
-      $scope.data = JSON.parse data[0].value
+      $scope.raw = JSON.parse data[0].value
   $scope.reload()
   $scope.$parent.reload = $scope.reload
 
-myApp.controller 'InstanceInfoCtrl', ($scope,$http,$routeParams,$rootScope,Page) ->
+myApp.controller 'InstanceInfoCtrl', ($scope,$http,$routeParams,$rootScope,$sce,Page) ->
   Page.setTitle "Instance Info"
+  grafanaReload = (name)->
+    E=document.getElementById name
+    W=E.contentWindow
+    A=W.angular
+    D=A.element W.document
+    S=D.scope()
+    S.$broadcast 'refresh'
+
+  $scope.trustGrafanaUrl = (panelId)->
+    $sce.trustAsUrl("grafana/dashboard-solo/db/instance-stats?panelId=#{panelId}&fullscreen&var-id=#{$scope.raw.Id}")
+
   $scope.reload = ->
     etcdGet($http,"/docker/instances/#{$routeParams.id}/raw").then (data)->
-      $scope.data = JSON.parse data[0].value
+      $scope.raw = JSON.parse data[0].value
+      try
+        grafanaReload x for x in ["stats-cpu","stats-mem","stats-net","stats-blk"]
+      catch e
+        console.error e
+
   $scope.reload()
   $scope.$parent.reload = $scope.reload
 

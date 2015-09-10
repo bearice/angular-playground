@@ -7,9 +7,9 @@ table.table.table-hover.table-bordered(ts-wrapper)
     th(ts-criteria="raw.State.StartedAt") Started At
     th(ts-criteria="raw.LastSeen") Last Report
   tr(ng-repeat="i in instances", ts-repeat)
+    td {{i.id.substr(0,8)}}
     td
-      a(ng-href="instance/{{i.id}}") {{i.id.substr(0,8)}}
-    td {{i.raw.Name}}
+      a(ng-href="instance/{{i.id}}") {{i.raw.Name}}
     td
       a(ng-href="server/{{i.host}}") {{i.host}}
     td {{i.raw.Config.Image}}

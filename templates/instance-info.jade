@@ -1,0 +1,89 @@
+accordion#instance-info.row(close-others="false")
+  .row.table-row
+    #genernal.col-md-6.table-grid
+      accordion-group(heading="Genernal",panel-class="panel-primary",is-open="true")
+        dl.dl-horizontal
+          dt Id:
+          dd
+            span(title="{{raw.Id}}") {{raw.Id.substr(0,16)}}
+          dt Name:
+          dd
+            span {{raw.Name}}
+          dt Host:
+          dd
+            a(ng-href="server/{{raw.Host}}")
+              span {{raw.Host}}
+          dt Pid:
+          dd
+            span {{raw.State.Pid}}
+          dt Created At:
+          dd
+            span(title="{{raw.Created | amDateFormat:'YYYY-MM-DD HH:mm:ss' }}" am-time-ago="raw.Created")
+          dt Started At:
+          dd
+            span(title="{{raw.State.StartedAt | amDateFormat:'YYYY-MM-DD HH:mm:ss' }}" am-time-ago="raw.State.StartedAt")
+
+    #network.col-md-6.table-grid
+      accordion-group(heading="Network",is-open="true")
+        dl.dl-horizontal
+          dt IP:
+          dd {{raw.NetworkSettings.IPAddress}}
+          dt MAC:
+          dd {{raw.NetworkSettings.MacAddress}}
+          dt Hostname:
+          dd {{raw.Config.Hostname}}
+          dt Ports:
+          dd
+            table.table.table-hover.table-condensed.table-bordered
+              tr
+                th Port
+                th Mapped To
+              tr(ng-repeat="(i,p) in raw.NetworkSettings.Ports")
+                td {{i}}
+                td
+                  p(ng-repeat="m in p") {{m.HostIp}}:{{m.HostPort}}
+
+  .row.table-row
+    #environments.col-md-6.table-grid
+      accordion-group(heading="Environment Varibles",is-open="true")
+        table.table.table-hover.table-condensed.table-bordered
+          tr
+            th Name
+            th Value
+          tr(ng-repeat="e in raw.Config.Env")
+            td
+              pre.pre-reset {{e.substr(0,e.indexOf('='))}}
+            td
+              pre.pre-reset {{e.substr(1+e.indexOf('='))}}
+
+
+    #volumes.col-md-6.table-grid
+      accordion-group(heading="Volumes",is-open="true")
+        table.table.table-hover.table-condensed.table-bordered
+          tr
+            th Host Path
+            th Mapped To
+            th Allow Write
+          tr(ng-repeat="(i,p) in raw.Volumes")
+            td {{p}}
+            td {{i}}
+            td {{raw.VolumesRW[i]}}
+
+  .row.table-row
+    #stats.col-md-12.table-grid(ng-if="raw!=undefined")
+      accordion-group(heading="Stats",is-open="true")
+        h4.text-center
+          a(target="_blank" href="grafana/dashboard/db/instance-stats?var-id={{raw.Id}}")
+            | >> Click for more details <<
+        .row.table-grid
+          iframe#stats-cpu.col-md-6(ng-src="{{trustGrafanaUrl(2)}}" frameborder="0" height="200")
+          iframe#stats-mem.col-md-6(ng-src="{{trustGrafanaUrl(5)}}" frameborder="0" height="200")
+        .row.table-grid
+          iframe#stats-net.col-md-6(ng-src="{{trustGrafanaUrl(4)}}" frameborder="0" height="200")
+          iframe#stats-blk.col-md-6(ng-src="{{trustGrafanaUrl(6)}}" frameborder="0" height="200")
+
+  .row.table-row
+    #raw.col-md-12.table-grid
+      accordion-group(heading="Raw",is-open="true")
+        json-formatter(json="raw",open="0")
+

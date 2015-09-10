@@ -17,11 +17,11 @@ table.table.table-hover.table-bordered(ts-wrapper)
     td.right {{s.Containers}}
     td.right {{s.NCPU}}
     td.right
-      progressbar.progress-striped(value="s.CPUPercent | percent:100:true",max="s.NCPU*100")
+      progressbar.progress-striped.active(value="s.CPUPercent | percent:100:true",max="s.NCPU*100")
         span {{s.CPUPercent | percent:100:true}}%
     td.right {{s.MemTotal | byteFmt:2}}
     td.right
-      progressbar.progress-striped(value="s.MemoryUsed | percent:s.MemTotal:true")
+      progressbar.progress-striped.active(value="s.MemoryUsed | percent:s.MemTotal:true")
         span {{s.MemoryUsed | byteFmt:2}}/{{s.MemTotal | byteFmt:2}}
     td.right {{s.MemoryAllocated | byteFmt:2}}
     td(title="{{s.SystemTime | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}")
