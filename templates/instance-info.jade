@@ -44,17 +44,17 @@ accordion#instance-info.row(close-others="false")
                   p(ng-repeat="m in p") {{m.HostIp}}:{{m.HostPort}}
 
   .row.table-row
-    #environments.col-md-6.table-grid
-      accordion-group(heading="Environment Varibles",is-open="true")
+    #labels.col-md-6.table-grid
+      accordion-group(heading="Labels",is-open="true")
         table.table.table-hover.table-condensed.table-bordered
           tr
             th Name
             th Value
-          tr(ng-repeat="e in raw.Config.Env")
+          tr(ng-repeat="(k,v) in raw.Config.Labels")
             td
-              pre.pre-reset {{e.substr(0,e.indexOf('='))}}
+              pre.pre-reset {{k}}
             td
-              pre.pre-reset {{e.substr(1+e.indexOf('='))}}
+              pre.pre-reset {{v}}
 
 
     #volumes.col-md-6.table-grid
@@ -68,6 +68,19 @@ accordion#instance-info.row(close-others="false")
             td {{p}}
             td {{i}}
             td {{raw.VolumesRW[i]}}
+
+  .row.table-row
+    #environments.col-md-12.table-grid
+      accordion-group(heading="Environment Varibles",is-open="true")
+        table.table.table-hover.table-condensed.table-bordered
+          tr
+            th Name
+            th Value
+          tr(ng-repeat="e in raw.Config.Env")
+            td
+              pre.pre-reset {{e.substr(0,e.indexOf('='))}}
+            td
+              pre.pre-reset {{e.substr(1+e.indexOf('='))}}
 
   .row.table-row
     #stats.col-md-12.table-grid(ng-if="raw!=undefined")
