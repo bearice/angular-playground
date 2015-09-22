@@ -4,6 +4,7 @@ table.table.table-hover.table-bordered(ts-wrapper)
     th(ts-criteria="raw.Name+host",ts-default) Name
     th(ts-criteria="host+raw.Name") Host
     th(ts-criteria="raw.Config.Image") Image
+    th() PID
     th(ts-criteria="raw.State.StartedAt") Started At
     th(ts-criteria="raw.LastSeen") Last Report
   tr(ng-repeat="i in instances", ts-repeat)
@@ -13,7 +14,8 @@ table.table.table-hover.table-bordered(ts-wrapper)
     td
       a(ng-href="server/{{i.host}}") {{i.host}}
     td {{i.raw.Config.Image}}
+    td {{i.raw.State.Pid}}
     td(title="{{i.raw.State.StartedAt | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}")
       span(am-time-ago="i.raw.State.StartedAt")
     td(title="{{i.raw.LastSeen | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}")
-      span(am-time-ago="i.raw.LastSeen")
+      | {{i.raw.LastSeen | secondsAgo}}

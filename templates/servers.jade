@@ -25,4 +25,4 @@ table.table.table-hover.table-bordered(ts-wrapper)
         span {{s.MemoryUsed | byteFmt:2}}/{{s.MemTotal | byteFmt:2}}
     td.right {{s.MemoryAllocated | byteFmt:2}}
     td(title="{{s.SystemTime | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}")
-      span(am-time-ago="s.SystemTime")
+      | {{s.SystemTime | secondsAgo}}

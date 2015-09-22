@@ -24,6 +24,12 @@ etcdGet = ($http,path) ->
   $http.get(baseURL+path, params: {recursive: true}).then (resp) ->
     getNodes path+"/", resp.data.node
 
+myApp.filter 'secondsAgo', ->
+  (input)->
+    d = new Date(input)
+    d = (new Date()).valueOf() - d.valueOf()
+    return "#{Math.ceil(d/1000)}S ago"
+
 myApp.config ($routeProvider,$locationProvider,$sceProvider)->
   $sceProvider.enabled false
   $locationProvider.html5Mode true
