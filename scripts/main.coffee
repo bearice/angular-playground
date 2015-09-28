@@ -111,7 +111,7 @@ myApp.controller 'AppListCtrl', ($scope,$http,$rootScope,Page) ->
         [env,app,term,name] = x.name.split('/')
         return undefined if name is undefined
         [instance,node] = name.split('@')
-        {env,app,term,instance,node,id:x.value}
+        {env,app,term:parseInt(term),instance,node,id:x.value}
   $scope.reload()
   $scope.$parent.reload = $scope.reload
 
