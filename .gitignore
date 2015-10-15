@@ -1,5 +1,6 @@
 .DS_Store
 *.html
+*.map
 *.js
 bower_components/
 node_modules/
