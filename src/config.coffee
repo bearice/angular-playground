@@ -10,7 +10,7 @@ config =
   mongodb:
     url: "mongodb://127.0.0.1/daikon"
   httpd:
-    listen: "0.0.0.0:3000"
+    listen: process.env.HTTP_PORT || 3000
     base: "/"
 
 try
