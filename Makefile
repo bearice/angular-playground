@@ -17,7 +17,7 @@ node_modules: package.json
 	$(NPM) install -d
 	touch node_modules
 
-public:
+public: node_modules
 	make -C public
 
 clean:
