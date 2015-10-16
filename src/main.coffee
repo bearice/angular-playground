@@ -32,5 +32,8 @@ app.use (next)->
 
 [host,port] = config.httpd.listen.split ':'
 [port,host] = [host,'0.0.0.0'] if port is undefined
+if host is 'unix'
+  app.listen port, -> console.info "Listening on #{host}:#{port}"
+else
+  app.listen port, host, -> console.info "Listening on #{host}:#{port}"
 
-app.listen port, host, -> console.info "Listening on #{host}:#{port}"
