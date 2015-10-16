@@ -35,27 +35,27 @@ myApp.config ($routeProvider,$locationProvider,$sceProvider)->
   $locationProvider.html5Mode true
   $routeProvider
   .when '/instance/list',
-    templateUrl: 'templates/instances.html'
+    templateUrl: 'public/templates/instances.html'
     controller: 'InstanceListCtrl'
     controllerAs: 'instances'
   .when '/instance/:id',
-    templateUrl: 'templates/instance-info.html'
+    templateUrl: 'public/templates/instance-info.html'
     controller: 'InstanceInfoCtrl'
     controllerAs: 'instance'
   .when '/app/list',
-    templateUrl: 'templates/apps.html'
+    templateUrl: 'public/templates/apps.html'
     controller: 'AppListCtrl'
     controllerAs: 'apps'
   .when '/server/list',
-    templateUrl: 'templates/servers.html'
+    templateUrl: 'public/templates/servers.html'
     controller: 'ServerListCtrl'
     controllerAs: 'servers'
   .when '/server/:name',
-    templateUrl: 'templates/server-info.html'
+    templateUrl: 'public/templates/server-info.html'
     controller: 'ServerInfoCtrl'
     controllerAs: 'server'
   .when '/home',
-    templateUrl: 'templates/home.html'
+    templateUrl: 'public/templates/home.html'
     controller: 'HomeCtrl'
     controllerAs: 'home'
   .otherwise redirectTo: '/home'

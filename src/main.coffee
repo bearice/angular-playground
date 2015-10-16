@@ -10,6 +10,7 @@ KBody   = require 'koa-body'
 KStatic = require 'koa-static'
 Router  = require 'koa-router'
 Jade    = require 'koa-jade'
+Mount   = require 'koa-mount'
 
 router = new Router
 
@@ -21,7 +22,7 @@ views = new Jade
 app = new Koa
 app.use KLogger()
 app.use KBody()
-app.use KStatic('public')
+app.use Mount "/public", KStatic('public')
 app.use router.routes()
 app.use router.allowedMethods()
 app.use views.middleware
