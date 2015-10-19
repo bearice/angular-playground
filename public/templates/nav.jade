@@ -1,9 +1,12 @@
 nav.navbar.navbar-default.navbar-fixed-top
   .container-fluid
     .navbar-header
-      a.navbar-brand(href="home") Daikon
+      a.navbar-brand(href="home")
+        img(alt="Daikon" src="public/favicon/favicon-194x194.png", style="height: 50px; margin-top: -15px;")
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav.navbar-left
+        li
+          a(ng-href="home") Home
         li
           a(ng-href="env/list") Envs
         li
