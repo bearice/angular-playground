@@ -1,0 +1,11 @@
+table.table.table-hover.table-bordered(ts-wrapper)
+  tr
+    th(ts-criteria='_id', ts-default) Env
+    th Apps
+  tr(ng-repeat="d in data", ts-repeat)
+    td
+      a(ng-href="env/{{d._id}}") {{d._id}}
+    td
+      ul
+        li(ng-repeat="app in d.apps")
+          a(ng-href="app/{{d._id}}/{{app}}") {{app}}

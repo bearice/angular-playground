@@ -2,21 +2,19 @@ Router  = require 'koa-router'
 {Service} = require './model'
 
 api = new Router
-api.get "/hello/:name", ->
-  @body = "hello #{@params.name}"
-  yield return
 
-api.get "/env", ->
+api.get "/service", ->
   @body = yield Service.aggregate().group(
     _id: "$env"
     count: $sum: 1
+    apps: $push: '$app'
   ).exec()
 
-api.get "/env/:env", ->
+api.get "/service/:env", ->
   @body = yield Service.find {env: @params.env}
   @status=404 if @body is null
 
-api.get "/env/:env/:app", ->
+api.get "/service/:env/:app", ->
   @body = yield Service.findOne
     env: @params.env
     app: @params.app

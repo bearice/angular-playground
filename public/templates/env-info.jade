@@ -1,0 +1,12 @@
+table.table.table-hover.table-bordered(ts-wrapper)
+  tr
+    th(ts-criteria='app', ts-default) Application Name
+    th(ts-criteria='template') Template
+    th Options
+  tr(ng-repeat="d in data", ts-repeat)
+    td
+      a(ng-href="app/{{d.env}}/{{d.app}}") {{d.env}}/{{d.app}}
+    td
+      a(ng-href="template/{{d.template}}") {{d.template}}
+    td
+      {{d.options}}

@@ -1,0 +1,41 @@
+accordion#server-info.row(close-others="false")
+  .row.table-row
+    #genernal.col-md-12.table-grid
+      accordion-group(heading="Config",panel-class="panel-primary",is-open="true")
+        dl.dl-horizontal
+          dt Env:
+          dd
+            span {{config.env}}
+
+          dt App:
+          dd
+            span {{config.app}}
+
+          dt Template:
+          dd
+            span {{config.template}}
+
+          dt Options:
+          dd
+            span {{config.options}}
+
+          dt Current Term:
+          dd
+            span {{currentTerm}}
+
+  .row.table-row
+    #raw.col-md-12.table-grid
+      accordion-group(heading="Instance",is-open="true")
+        table.table.table-hover.table-bordered(ts-wrapper)
+          tr
+            th(ts-criteria="id", ts-default) Id
+            th(ts-criteria="term") Term
+            th(ts-criteria="instance") Instance
+            th(ts-criteria="node") Host
+          tr(ng-repeat="d in instances", ts-repeat)
+            td {{d.id.substr(0,8)}}
+            td {{d.term}}
+            td
+              a(ng-href="instance/{{d.id}}") {{d.instance}}
+            td
+              a(ng-href="server/{{d.node}}") {{d.node}}

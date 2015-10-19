@@ -8,8 +8,10 @@ table.table.table-hover.table-bordered(ts-wrapper)
     th(ts-criteria="node") Host
   tr(ng-repeat="d in apps", ts-repeat)
     td {{d.id.substr(0,8)}}
-    td {{d.env}}
-    td {{d.app}}
+    td
+      a(ng-href="env/{{d.env}}") {{d.env}}
+    td
+      a(ng-href="app/{{d.env}}/{{d.app}}") {{d.app}}
     td {{d.term}}
     td
       a(ng-href="instance/{{d.id}}") {{d.instance}}

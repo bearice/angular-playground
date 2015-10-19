@@ -22,6 +22,7 @@
     "angular-filter": "~0.5.5",
     "angular-loading-bar": "~0.8.0",
     "angular-moment": "~0.10.2",
+    "angular-resource": "~1.4.7",
     "angular-route": "~1.4.4",
     "angular-sanitize": "~1.4.5",
     "angular-tablesort": "~1.1.0",
