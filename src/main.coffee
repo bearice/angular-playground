@@ -15,7 +15,7 @@ Mount   = require 'koa-mount'
 app = new Koa
 app.use KLogger()
 app.use KBody()
-app.use Mount "/public", KStatic('public')
+app.use Mount "/public", KStatic('public',maxage: 3600)
 
 views = new Jade
   viewPath: Path.resolve __dirname,'../views'
