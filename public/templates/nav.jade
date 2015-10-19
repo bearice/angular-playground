@@ -1,0 +1,24 @@
+nav.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    .navbar-header
+      a.navbar-brand(href="home") Daikon
+    #navbar.navbar-collapse.collapse
+      ul.nav.navbar-nav.navbar-left
+        li
+          a(ng-href="env/list") Envs
+        li
+          a(ng-href="app/list") Apps
+        li
+          a(ng-href="instance/list") Instances
+        li
+          a(ng-href="server/list") Servers
+        li
+          #title.navbar-text
+            | >> 
+            span(ng-bind='title')
+      ul.nav.navbar-nav.navbar-right
+        li(ng-class="{active:autoReload}")
+          a#autoreload.glyphicon.glyphicon-time(ng-click="toggleAutoReload()")
+            span(ng-if="autoReload" ng-bind="countdown")
+        li
+          a#reload.glyphicon.glyphicon-refresh(ng-click="$emit('reload')")
