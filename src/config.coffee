@@ -14,7 +14,8 @@ config =
     base: "/"
 
 try
-  local_config = require path.resolve process.cwd(),'./config.coffee'
+  config_filename = if process.env.ENV_NAME then "config.#{process.env.ENV_NAME}.coffee" else "config.coffee"
+  local_config = require path.resolve process.cwd(),config_filename
   merge config,local_config
 catch e
   console.error "failed to merge local config", e
