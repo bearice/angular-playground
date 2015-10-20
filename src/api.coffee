@@ -21,7 +21,9 @@ findSvc = (next) ->
   return @status=404 if @body is null
   yield next
 
-api.get "/service/:env/:app", findSvc
+api.get "/service/:env/:app", findSvc, ->
+  yield return
+
 api.put "/serivce/:env/:app", findSvc, ->
   merge @body, @request.body
   yield @body.save()
