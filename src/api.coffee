@@ -14,10 +14,23 @@ api.get "/service/:env", ->
   @body = yield Service.find {env: @params.env}
   @status=404 if @body is null
 
-api.get "/service/:env/:app", ->
+findSvc = (next) ->
   @body = yield Service.findOne
     env: @params.env
     app: @params.app
-  @status=404 if @body is null
+  return @status=404 if @body is null
+  yield next
+
+api.get "/service/:env/:app", findSvc
+api.put "/serivce/:env/:app", findSvc, ->
+  merge @body, @request.body
+  yield @body.save()
+
+api.delete "/service/:env/:app", ->
+  yield @body.delete()
+
+api.post "/service", ->
+  @body = new Service @request.body
+  yield @body.save()
 
 module.exports = api

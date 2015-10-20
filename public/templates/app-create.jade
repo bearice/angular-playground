@@ -1,0 +1,12 @@
+form(novalidate)
+  .form-group
+    label Env:
+    input.form-control(type="text" typeahead="e for e in envs | filter:$viewValue " ng-model="data.env")
+  .form-group
+    label App:
+    input.form-control(type="text" typeahead="a for a in apps | filter:$viewValue " ng-model="data.app")
+  .form-group
+    label Template:
+    input.form-control(type="text" ng-model="data.template")
+
+  pre {{data}}

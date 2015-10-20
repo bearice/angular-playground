@@ -2,6 +2,7 @@ myApp = angular.module 'daikonApp',[
   'ngRoute',
   'ngResource',
   'ngSanitize',
+  'ngAnimate',
   'ui.bootstrap',
   'angular.filter',
   'tableSort',
@@ -40,39 +41,33 @@ myApp.config ($routeProvider,$locationProvider,$sceProvider)->
   .when '/env/list',
     templateUrl: 'public/templates/env-list.html'
     controller: 'EnvListCtrl'
-    controllerAs: 'envs'
   .when '/env/:env',
     templateUrl: 'public/templates/env-info.html'
     controller: 'EnvInfoCtrl'
-    controllerAs: 'env'
   .when '/app/list',
     templateUrl: 'public/templates/app-list.html'
     controller: 'AppListCtrl'
-    controllerAs: 'apps'
   .when '/app/:env/:app',
     templateUrl: 'public/templates/app-info.html'
     controller: 'AppInfoCtrl'
-    controllerAs: 'app'
+  .when '/app/create',
+    templateUrl: 'public/templates/app-create.html'
+    controller: 'AppCreateCtrl'
   .when '/instance/list',
     templateUrl: 'public/templates/instance-list.html'
     controller: 'InstanceListCtrl'
-    controllerAs: 'instances'
   .when '/instance/:id',
     templateUrl: 'public/templates/instance-info.html'
     controller: 'InstanceInfoCtrl'
-    controllerAs: 'instance'
   .when '/server/list',
     templateUrl: 'public/templates/server-list.html'
     controller: 'ServerListCtrl'
-    controllerAs: 'servers'
   .when '/server/:name',
     templateUrl: 'public/templates/server-info.html'
     controller: 'ServerInfoCtrl'
-    controllerAs: 'server'
   .when '/home',
     templateUrl: 'public/templates/home.html'
     controller: 'HomeCtrl'
-    controllerAs: 'home'
   .otherwise redirectTo: '/home'
 
 myApp.service 'Page',($rootScope)->
@@ -169,6 +164,22 @@ myApp.controller 'AppInfoCtrl', ($scope,$routeParams,Page,Services,etcdGet) ->
 
   $scope.reload()
   $scope.$parent.reload = $scope.reload
+
+myApp.controller 'AppCreateCtrl', ($scope,Page,Services) ->
+  Page.setTitle "Create Application"
+  $scope.envs = []
+  $scope.apps = []
+  $scope.data = options: {}
+  data = Services.listEnv()
+  data.$promise.then ->
+    envs = {}
+    apps = {}
+    for x in data
+      envs[x._id] = true
+      apps[a] = true for a in x.apps
+    $scope.envs = _.keys(envs).sort()
+    $scope.apps = _.keys(apps).sort()
+
 
 myApp.controller 'InstanceListCtrl', ($scope,$http,$rootScope,Page,etcdGet) ->
   Page.setTitle "Instance List"
