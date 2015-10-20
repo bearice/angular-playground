@@ -16,6 +16,12 @@ app = new Koa
 app.use KLogger()
 app.use KBody()
 app.use Mount "/public", KStatic('public',maxage: 3600)
+app.use Mount "/public", -> yield return @status=404
+
+api = require './api'
+app.use Mount "/api", api.routes()
+app.use Mount "/api", api.allowedMethods()
+app.use Mount "/api", -> yield return @status=404
 
 views = new Jade
   viewPath: Path.resolve __dirname,'../views'
