@@ -1,5 +1,5 @@
 Router  = require 'koa-router'
-{Service} = require './model'
+{Service,Template} = require './model'
 
 api = new Router
 
@@ -32,5 +32,12 @@ api.delete "/service/:env/:app", ->
 api.post "/service", ->
   @body = new Service @request.body
   yield @body.save()
+
+api.get "/template", ->
+  @body = yield Template.find()
+
+api.get "/template/:name", ->
+  @body = yield Template.findByName(@params.name)
+  return @status=404 if @body is null
 
 module.exports = api
