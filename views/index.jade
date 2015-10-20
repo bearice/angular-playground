@@ -1,4 +1,4 @@
-html(ng-app="daikonApp",ng-controller="RootCtrl")
+html(ng-app="DaikonMain",ng-controller="RootCtrl")
   head
     base(href=config.httpd.base)
     meta(http-equiv="Content-Type" content="text/html;charset=UTF-8")
@@ -48,6 +48,8 @@ html(ng-app="daikonApp",ng-controller="RootCtrl")
     script(src="public/bower_components/angular-moment/angular-moment.js")
     script(src="public/bower_components/angular-loading-bar/build/loading-bar.js")
     script(src="public/scripts/main.js")
+    script(src="public/scripts/resources.js")
+    script(src="public/scripts/controllers.js")
     title(ng-bind='title')
 
   body
