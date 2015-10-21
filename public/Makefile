@@ -18,5 +18,5 @@ clean:
 	$(JADE) --pretty $<
 
 %.js: %.coffee
-	$(COFFEE) -c $<
+	$(COFFEE) -c -m $<
 
