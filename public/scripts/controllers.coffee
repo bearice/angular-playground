@@ -112,7 +112,7 @@ myApp.controller 'InstanceListCtrl', ($scope,$http,$rootScope,Page,etcdGet) ->
   $scope.reload()
   $scope.$parent.reload = $scope.reload
 
-myApp.controller 'InstanceInfoCtrl', ($scope,$http,$routeParams,$rootScope,$sce,Page,etcdGet,Path) ->
+myApp.controller 'InstanceInfoCtrl', ($scope,$http,$routeParams,$rootScope,$sce,Page,etcdGet,config) ->
   Page.setTitle "Instance Info: #{$routeParams.id}"
   grafanaReload = (name)->
     E=document.getElementById name
@@ -123,7 +123,7 @@ myApp.controller 'InstanceInfoCtrl', ($scope,$http,$routeParams,$rootScope,$sce,
     S.$broadcast 'refresh'
 
   $scope.trustGrafanaUrl = (panelId)->
-    $sce.trustAsUrl(Path.grafana + "?panelId=#{panelId}&fullscreen&var-id=#{$scope.raw.Id}")
+    $sce.trustAsUrl(config.grafana + "?panelId=#{panelId}&fullscreen&var-id=#{$scope.raw.Id}")
 
   $scope.reload = ->
     etcdGet("/docker/instances/#{$routeParams.id}/raw").then (data)->
