@@ -1,6 +1,9 @@
-myApp = angular.module 'DaikonMain'
+module = angular.module 'daikon'
 
-myApp.factory 'Service', ($resource)->
+module.service 'Page',($rootScope)->
+  return setTitle: (title)->$rootScope.title = title
+
+module.factory 'Service', ($resource)->
   $resource 'api/service/:env/:app',null,{
     'listEnv':
       method: 'GET'
@@ -11,10 +14,10 @@ myApp.factory 'Service', ($resource)->
       isArray: true
   }
 
-myApp.factory 'Template', ($resource)->
+module.factory 'Template', ($resource)->
   $resource 'api/template/:name',null,{}
 
-myApp.factory 'Etcd', (config,$http)->
+module.factory 'Etcd', (config,$http)->
   flatNodes = (pfix,node,acc=[])->
     if node.dir
       flatNodes(pfix,x,acc) for x in node.nodes || []

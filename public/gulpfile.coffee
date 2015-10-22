@@ -11,7 +11,7 @@ gulp.task 'app.js', ->
       .pipe(coffee())
       .pipe(ngAnnotate())
       .pipe(concat('app.js'))
-      .pipe(uglify())
+      #.pipe(uglify())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('.'))
 

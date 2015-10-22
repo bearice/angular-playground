@@ -8,7 +8,7 @@ TEMPLATES=$(patsubst %.jade,%.html,$(shell find . -name \*.jade))
 
 all: bower_components app.js $(TEMPLATES)
 
-app.js: $(TARGETS) gulpfile.coffee
+app.js: gulpfile.coffee $(SCRIPTS)
 	$(GULP) app.js
 
 bower_components: bower.json

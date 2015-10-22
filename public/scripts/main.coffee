@@ -1,8 +1,8 @@
-myApp = angular.module 'DaikonMain',[
+module = angular.module 'daikon',[
   'ngRoute',
-  'ngResource',
   'ngSanitize',
   'ngAnimate',
+  'ngResource',
   'ui.bootstrap',
   'angular.filter',
   'tableSort',
@@ -12,61 +12,17 @@ myApp = angular.module 'DaikonMain',[
   'isteven-multi-select'
 ]
 
-myApp.constant 'config',
+module.constant 'config',
   etcd: "etcd2/v2/keys"
   grafana: "grafana/"
 
-myApp.factory 'etcdGet', ($http,config)->
-  getNodes = (pfix,node,a)->
-    a = [] unless a
-    if node.dir
-      node.nodes?.forEach (x)-> getNodes(pfix,x,a)
-    else
-      a.push
-        name: node.key.substr(pfix.length)
-        value: node.value
-    return a
-
-myApp.directive 'selectServer', ->
-  restrict: 'E',
-  require: 'ngModel',
-  scope:
-    list: '=data'
-  template: '''
-    <div  isteven-multi-select
-          input-model="list"
-          output-model="selected"
-          tick-property="selected"
-          button-label="Name"
-          item-label="Name"
-          search-property="Name"
-          output-properties="Name"
-          on-close="sync()" />
-    '''
-
-  controller: ($scope)->
-    $scope.selected = []
-    $scope.sync = ->
-      $scope.val = if $scope.selected.length is 0
-        null
-      else
-        x.Name for x in $scope.selected
-
-  link: (scope,elem,attr,ctrl)->
-    scope.$watch 'val', (val)->ctrl.$setViewValue val
-    ctrl.$name = attr.name
-
-
-myApp.filter 'secondsAgo', ->
+module.filter 'secondsAgo', ->
   (input)->
     d = new Date(input)
     d = (new Date()).valueOf() - d.valueOf()
     return "#{Math.ceil(d/1000)}S ago"
 
-myApp.service 'Page',($rootScope)->
-  return setTitle: (title)->$rootScope.title = title
-
-myApp.config ($routeProvider,$locationProvider,$sceProvider)->
+module.config ($routeProvider,$locationProvider,$sceProvider)->
   $sceProvider.enabled false
   $locationProvider.html5Mode true
   $routeProvider
