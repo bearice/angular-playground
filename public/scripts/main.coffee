@@ -9,6 +9,7 @@ myApp = angular.module 'DaikonMain',[
   'jsonFormatter',
   'angularMoment',
   'angular-loading-bar',
+  'isteven-multi-select'
 ]
 
 myApp.constant 'config',
@@ -26,9 +27,35 @@ myApp.factory 'etcdGet', ($http,config)->
         value: node.value
     return a
 
-  return (path) ->
-    $http.get(config.etcd+path, params: {recursive: true}).then (resp) ->
-      getNodes path+"/", resp.data.node
+myApp.directive 'selectServer', ->
+  restrict: 'E',
+  require: 'ngModel',
+  scope:
+    list: '=data'
+  template: '''
+    <div  isteven-multi-select
+          input-model="list"
+          output-model="selected"
+          tick-property="selected"
+          button-label="Name"
+          item-label="Name"
+          search-property="Name"
+          output-properties="Name"
+          on-close="sync()" />
+    '''
+
+  controller: ($scope)->
+    $scope.selected = []
+    $scope.sync = ->
+      $scope.val = if $scope.selected.length is 0
+        null
+      else
+        x.Name for x in $scope.selected
+
+  link: (scope,elem,attr,ctrl)->
+    scope.$watch 'val', (val)->ctrl.$setViewValue val
+    ctrl.$name = attr.name
+
 
 myApp.filter 'secondsAgo', ->
   (input)->

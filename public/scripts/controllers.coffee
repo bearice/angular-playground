@@ -80,11 +80,20 @@ myApp.controller 'AppInfoCtrl', ($scope,$routeParams,Page,Service,etcdGet) ->
   $scope.reload()
   $scope.$parent.reload = $scope.reload
 
-myApp.controller 'AppCreateCtrl', ($scope,Page,Service) ->
+myApp.controller 'AppCreateCtrl', ($scope,Page,Service,Template,Etcd) ->
   Page.setTitle "Create Application"
   $scope.envs = []
   $scope.apps = []
+  $scope.templates = {}
+  $scope.servers = []
+  $scope.selected_servers = []
   $scope.data = options: {}
+  $scope.syncServer = ->
+    if $scope.selected_servers.length is 0
+      $scope.$valid=false
+    else
+      $scope.data.options.hosts = (x.Name for x in $scope.selected_servers)
+
   Service.listEnv().$promise.then (data)->
     envs = {}
     apps = {}
@@ -96,6 +105,9 @@ myApp.controller 'AppCreateCtrl', ($scope,Page,Service) ->
 
   Template.query().$promise.then (data)->
     $scope.templates[a.name] = a for a in data
+
+  Etcd.loadServers().then (data)->
+    $scope.servers = _.sortBy data, 'Name'
 
 myApp.controller 'InstanceListCtrl', ($scope,$http,$rootScope,Page,etcdGet) ->
   Page.setTitle "Instance List"

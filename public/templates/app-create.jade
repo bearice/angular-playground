@@ -1,12 +1,21 @@
-form(novalidate)
+form.form-horizontal(name="form")
   .form-group
-    label Env:
-    input.form-control(type="text" typeahead="e for e in envs | filter:$viewValue " ng-model="data.env")
+    label.control-label.col-sm-2 Env:
+    .col-sm-4
+      input.form-control(type="text" typeahead="e for e in envs | filter:$viewValue " ng-model="data.env" required placeholder="Namespace")
   .form-group
-    label App:
-    input.form-control(type="text" typeahead="a for a in apps | filter:$viewValue " ng-model="data.app")
+    label.control-label.col-sm-2 App:
+    .col-sm-4
+      input.form-control(type="text" typeahead="a for a in apps | filter:$viewValue " ng-model="data.app" required placeholder="Application")
   .form-group
-    label Template:
-    input.form-control(type="text" ng-model="data.template")
-
+    label.control-label.col-sm-2 Template:
+    .col-sm-4
+      select.form-control(ng-options="a.name as a.name for a in templates" ng-model="data.template" required)
+  .form-group
+    label.control-label.col-sm-2 Servers:
+    .col-sm-4
+      select-server(data="servers" ng-model="data.options.hosts" required)
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      button.btn.btn-primary(ng-disabled="form.$invalid") Save
   pre {{data}}

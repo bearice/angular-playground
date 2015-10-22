@@ -1,39 +1,40 @@
-.right { text-align: right; }
-table{font-family: monospace;}
 body {
     padding-top: 70px;
     padding-bottom: 20px;
 }
+table{
+    font-family: monospace;
+}
 .navbar {
     margin-bottom: 20px;
 }
-
-.pre-reset {
-    border: none;
-    padding: 0;
-    margin: auto;
-    background: 0;
-}
-
 .progress {
     margin-bottom: 0;
 }
-
 .progress-bar span {
     white-space: nowrap;
 }
-
 #instance-info .panel-body {
     overflow-x: scroll;
 }
-
 #server-info #genernal .panel-body {
     -webkit-column-count: 2;
     column-count: 2;
 }
-
-.table-grid {
-}
 .table-row {
     margin-bottom: 15px;
+}
+
+input.ng-invalid,
+select.ng-invalid {
+    border: 1px solid #f00;
+}
+
+input.ng-untouched.ng-invalid,
+select.ng-untouched.ng-invalid {
+    border: 1px solid #ccc;
+}
+
+form {
+  transition:0.5s linear all;
 }
