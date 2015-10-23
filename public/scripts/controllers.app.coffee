@@ -40,13 +40,14 @@ module.controller 'AppCreateCtrl', ($scope,Page,Service,Template,Etcd) ->
   $scope.apps = []
   $scope.templates = {}
   $scope.servers = []
-  $scope.selected_servers = []
-  $scope.data = options: {}
-  $scope.syncServer = ->
-    if $scope.selected_servers.length is 0
-      $scope.$valid=false
-    else
-      $scope.data.options.hosts = (x.Name for x in $scope.selected_servers)
+  $scope.data = {
+    app:'test'
+    env:'test'
+    template:'WebServer'
+    options: {
+      hosts: ['qa-101']
+    }
+  }
 
   Service.listEnv().$promise.then (data)->
     envs = {}
@@ -62,5 +63,5 @@ module.controller 'AppCreateCtrl', ($scope,Page,Service,Template,Etcd) ->
 
   Etcd.loadServers().then (data)->
     $scope.servers = _.sortBy data, 'Name'
-
+    $scope.servers.$resolved = true
 
