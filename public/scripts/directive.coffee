@@ -13,6 +13,9 @@ module.directive 'waitForLoading', ->
       </h1>
     </div>
   """
+  link: (scope, element, attrs, ctrl, transclude) ->
+    transclude scope.$parent, (clone, scope)->
+      element.append(clone)
 
 module.directive 'selectServer', ->
   restrict: 'E',
