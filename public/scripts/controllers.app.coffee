@@ -34,12 +34,8 @@ module.controller 'AppInfoCtrl', ($scope,$routeParams,Page,Service,Etcd) ->
   $scope.reload()
   $scope.$parent.reload = $scope.reload
 
-module.controller 'AppCreateCtrl', ($scope,Page,Service,Template,Etcd) ->
+module.controller 'AppCreateCtrl', ($scope,Page) ->
   Page.setTitle "Create Application"
-  $scope.envs = []
-  $scope.apps = []
-  $scope.templates = {}
-  $scope.servers = []
   $scope.data = {
     app:'test'
     env:'test'
@@ -48,20 +44,4 @@ module.controller 'AppCreateCtrl', ($scope,Page,Service,Template,Etcd) ->
       hosts: ['qa-101']
     }
   }
-
-  Service.listEnv().$promise.then (data)->
-    envs = {}
-    apps = {}
-    for x in data
-      envs[x._id] = true
-      apps[a] = true for a in x.apps
-    $scope.envs = _.keys(envs).sort()
-    $scope.apps = _.keys(apps).sort()
-
-  Template.query().$promise.then (data)->
-    $scope.templates[a.name] = a for a in data
-
-  Etcd.loadServers().then (data)->
-    $scope.servers = _.sortBy data, 'Name'
-    $scope.servers.$resolved = true
 

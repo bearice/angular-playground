@@ -1,27 +1,10 @@
-accordion#server-info.row(close-others="false")
+accordion#app-info.row(close-others="false")
   .row.table-row
     #genernal.col-md-12.table-grid
       accordion-group(heading="Config",panel-class="panel-primary",is-open="true")
-        dl.dl-horizontal
-          dt Env:
-          dd
-            span {{config.env}}
-
-          dt App:
-          dd
-            span {{config.app}}
-
-          dt Template:
-          dd
-            span {{config.template}}
-
-          dt Options:
-          dd
-            span {{config.options}}
-
-          dt Current Term:
-          dd
-            span {{currentTerm}}
+        wait-for-loading(loading="config")
+          form.form-horizontal(name="form")
+            app-editor(ng-model="config")
 
   .row.table-row
     #raw.col-md-12.table-grid

@@ -1,5 +1,19 @@
 module = angular.module 'daikon'
 
+module.directive 'waitForLoading', ->
+  restrict: 'AE',
+  transclude: true,
+  scope:
+    loading:'='
+  template: """
+    <div ng-if="loading" ng-transclude />
+    <div ng-if="!loading">
+      <h1 class="text-center">
+        <span class="glyphicon glyphicon-time></span>Loading ...
+      </h1>
+    </div>
+  """
+
 module.directive 'selectServer', ->
   restrict: 'E',
   require: 'ngModel',
@@ -37,14 +51,34 @@ module.directive 'appEditor', ->
   restrict: 'E',
   require: 'ngModel',
   scope:
-    apps: '='
-    envs: '='
-    templates: '='
-    servers: '='
     data:'=ngModel'
 
   templateUrl: 'public/templates/app-editor.html'
-  controller: ($scope)->
+  controller: ($scope,$q,Service,Template,Etcd)->
+    $scope.isLoading = true
+    $scope.envs = []
+    $scope.apps = []
+    $scope.templates = {}
+    $scope.servers = []
+
+    promises = []
+    promises.push Service.listEnv().$promise.then (data)->
+      envs = {}
+      apps = {}
+      for x in data
+        envs[x._id] = true
+        apps[a] = true for a in x.apps
+      $scope.envs = _.keys(envs).sort()
+      $scope.apps = _.keys(apps).sort()
+
+    promises.push Template.query().$promise.then (data)->
+      $scope.templates[a.name] = a for a in data
+
+    promises.push Etcd.loadServers().then (data)->
+      $scope.servers = _.sortBy data, 'Name'
+
+    $q.all(promises).then ->
+      $scope.isLoading = false
 
   link: ($scope, $element, $attrs, ngModel)->
     $scope.$watch 'overrideImage', ->

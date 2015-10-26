@@ -1,4 +1,4 @@
-.col-md-8(ng-form="form")
+.col-md-8(ng-form="form" ng-if="!loading")
   .form-group
     label.control-label.col-sm-2 Env:
     .col-sm-10
@@ -13,10 +13,8 @@
       select.form-control(ng-options="a.name as a.name for a in templates" ng-model="data.template" required)
   .form-group
     label.control-label.col-sm-2 Servers:
-    .col-sm-10(ng-if="servers.$resolved")
+    .col-sm-10
       select-server(data="servers" ng-model="data.options.hosts" required)
-    .col-sm-10(ng-if="!servers.$resolved")
-      | Loading...
 
   .form-group
     .col-sm-offset-2.col-sm-10
@@ -32,5 +30,10 @@
           span.input-group-addon
             input(type="checkbox" ng-model="overrideImage")
           input.form-control(type="text" ng-model="customImage" placeholder="Image" ng-readonly="!overrideImage" required)
+
+.col-sm-8(ng-if="loading")
+  h1.text-center
+    span.glyphicon.glyphicon-time
+    | Loading...
 
 pre.col-md-4 {{data|json}}
