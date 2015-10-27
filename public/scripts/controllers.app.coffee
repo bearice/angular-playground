@@ -34,7 +34,7 @@ module.controller 'AppInfoCtrl', ($scope,$routeParams,Page,Service,Etcd) ->
   $scope.reload()
   $scope.$parent.reload = $scope.reload
 
-module.controller 'AppCreateCtrl', ($scope,Page) ->
+module.controller 'AppCreateCtrl', ($scope,$location,Page,Service) ->
   Page.setTitle "Create Application"
   $scope.data = {
     app:'test'
@@ -45,3 +45,11 @@ module.controller 'AppCreateCtrl', ($scope,Page) ->
     }
   }
 
+  $scope.save = ->
+    s = new Service $scope.data
+    s.$save().then ->
+      console.info s
+      $location.path("app/#{s.env}/#{s.app}")
+    .catch (e)->
+      console.info e
+      Page.addAlert type:'danger',msg:e

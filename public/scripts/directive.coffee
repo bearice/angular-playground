@@ -37,9 +37,6 @@ module.directive 'selectServer', ->
 
   controller: ($scope)->
     $scope.model = [] if $scope.model is undefined
-    $scope.list.forEach (x)->
-      x.selected = $scope.model.indexOf(x.Name)>=0
-
     $scope.selected = []
     $scope.sync = ->
       $scope.model = if $scope.selected.length is 0
@@ -49,6 +46,10 @@ module.directive 'selectServer', ->
 
   link: (scope,elem,attr,ctrl)->
     scope.$watch 'model', (val)->ctrl.$setViewValue val
+    scope.$watch 'list', ->
+      scope.list.forEach (x)->
+        x.selected = scope.model.indexOf(x.Name)>=0
+        console.info x.Name,x.selected
 
 module.directive 'appEditor', ->
   restrict: 'E',
