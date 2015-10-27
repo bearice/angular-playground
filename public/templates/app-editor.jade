@@ -3,11 +3,11 @@
     .form-group
       label.control-label.col-sm-2 Env:
       .col-sm-10
-        input.form-control(type="text" typeahead="e for e in envs | filter:$viewValue " ng-model="data.env" required placeholder="Namespace")
+        input.form-control(type="text" typeahead="e for e in envs | filter:$viewValue " ng-model="data.env" required placeholder="Namespace" ng-readonly="updateMode")
     .form-group
       label.control-label.col-sm-2 App:
       .col-sm-10
-        input.form-control(type="text" typeahead="a for a in apps | filter:$viewValue " ng-model="data.app" required placeholder="Application")
+        input.form-control(type="text" typeahead="a for a in apps | filter:$viewValue " ng-model="data.app" required placeholder="Application" ng-readonly="updateMode")
     .form-group
       label.control-label.col-sm-2 Template:
       .col-sm-10

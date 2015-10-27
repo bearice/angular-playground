@@ -3,7 +3,7 @@ accordion#app-info.row(close-others="false")
     #config.col-md-12.table-grid
       accordion-group(heading="Config",panel-class="panel-primary",is-open="true")
         form.form-horizontal(name="form" ng-if="config")
-          app-editor(ng-model="config")
+          app-editor(ng-model="config" update-mode="true")
           .form-group
             .col-sm-offset-2.col-sm-10
               button.btn.btn-primary(ng-disabled="form.$invalid" ng-click="saveApp()") Save

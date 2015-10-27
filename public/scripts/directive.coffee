@@ -56,6 +56,7 @@ module.directive 'appEditor', ->
   require: 'ngModel',
   scope:
     data:'=ngModel'
+    updateMode: '='
 
   templateUrl: 'public/templates/app-editor.html'
   controller: ($scope,$q,Service,Template,Etcd)->
