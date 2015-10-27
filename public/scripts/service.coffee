@@ -1,7 +1,15 @@
 module = angular.module 'daikon'
 
 module.service 'Page',($rootScope)->
-  return setTitle: (title)->$rootScope.title = title
+  $rootScope.title = "Daikon"
+  $rootScope.alerts = []
+  $rootScope.closeAlert = (index)->
+    $rootScope.alerts.splice(index, 1)
+
+  return {
+    setTitle: (title)->$rootScope.title = title
+    addAlert: (alert)->$rootScope.alerts.push alert
+  }
 
 module.factory 'Service', ($resource)->
   $resource 'api/service/:env/:app',null,{

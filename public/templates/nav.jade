@@ -25,3 +25,5 @@ nav.navbar.navbar-default.navbar-fixed-top
             span(ng-if="autoReload" ng-bind="countdown")
         li
           a#reload.glyphicon.glyphicon-refresh(ng-click="$emit('reload')")
+
+alert(ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)") {{alert.msg}}
