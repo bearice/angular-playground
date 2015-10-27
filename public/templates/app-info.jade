@@ -2,9 +2,8 @@ accordion#app-info.row(close-others="false")
   .row.table-row
     #genernal.col-md-12.table-grid
       accordion-group(heading="Config",panel-class="panel-primary",is-open="true")
-        wait-for-loading(loading="config")
-          form.form-horizontal(name="form")
-            app-editor(ng-model="config")
+        form.form-horizontal(name="form" ng-if="config")
+          app-editor(ng-model="config")
 
   .row.table-row
     #raw.col-md-12.table-grid
