@@ -12,12 +12,20 @@ module.service 'Page',($rootScope)->
   }
 
 module.factory 'Service', ($resource)->
-  $resource 'api/service/:env/:app',null,{
-    'listEnv':
+  $resource 'api/service/:env/:app',{
+    env: '@env'
+    app: '@app'
+  },{
+    save:
+      method: 'POST'
+      params: {app:null,env:null}
+    update:
+      method: 'PUT'
+    listEnv:
       method: 'GET'
       isArray: true
       params: {}
-    'listApp':
+    listApp:
       method: 'GET'
       isArray: true
   }
