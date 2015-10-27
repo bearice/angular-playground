@@ -36,8 +36,8 @@ api.put "/serivce/:env/:app", findSvc, ->
   merge @body, @request.body
   yield @body.save()
 
-api.delete "/service/:env/:app", ->
-  yield @body.delete()
+api.delete "/service/:env/:app", findSvc, ->
+  yield @body.remove()
 
 api.post "/service", ->
   @body = new Service @request.body
