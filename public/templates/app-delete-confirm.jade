@@ -1,0 +1,10 @@
+.modal-header
+  h3.modal-title Are you ABSOLUTELY sure?
+  .alert.alert-warning Unexpected bad things will happen if you don’t read this!
+  p This action <strong>CANNOT</strong> be undone. This will permanently delete application:
+    strong(ng-bind="name")
+  p Please type in the name of the application to confirm.
+  form
+    p
+      input.form-control.btn-block(ng-model="confirm",placeholder="{{name}}")
+    button.btn.btn-block.btn-danger(ng-disabled="confirm!=name" ng-click="close()") I understand the consequences, delete this sucker

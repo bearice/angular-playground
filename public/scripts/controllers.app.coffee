@@ -12,7 +12,7 @@ module.controller 'AppListCtrl', ($scope,$http,$rootScope,Page,Etcd) ->
   $scope.reload()
   $scope.$parent.reload = $scope.reload
 
-module.controller 'AppInfoCtrl', ($scope,$routeParams,Page,Service,Etcd) ->
+module.controller 'AppInfoCtrl', ($scope,$routeParams,$modal,$location,Page,Service,Etcd) ->
   $scope.env = $routeParams.env
   $scope.app = $routeParams.app
   Page.setTitle "App Info: #{$scope.env}/#{$scope.app}"
@@ -33,6 +33,24 @@ module.controller 'AppInfoCtrl', ($scope,$routeParams,Page,Service,Etcd) ->
 
   $scope.reload()
   $scope.$parent.reload = $scope.reload
+
+  $scope.deleteApp = ->
+    m = $modal.open
+      resolve:
+        name: -> $scope.config.env+"/"+$scope.config.app
+      templateUrl: 'public/templates/app-delete-confirm.html'
+      controller: ($scope,$modalInstance,name)->
+        $scope.name = name
+        $scope.close = -> $modalInstance.close(name)
+
+    m.result.then ->
+      $scope.config.$remove().then ->
+        Page.addAlert type:'info',msg:"Application deleted: #{$scope.config.env}/#{$scope.config.app}"
+        $location.path("app/list")
+      .catch (e)->
+        console.info e
+        Page.addAlert type:'danger',msg:e
+
 
 module.controller 'AppCreateCtrl', ($scope,$location,Page,Service) ->
   Page.setTitle "Create Application"
