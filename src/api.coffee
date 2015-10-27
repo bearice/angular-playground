@@ -3,6 +3,14 @@ Router  = require 'koa-router'
 
 api = new Router
 
+api.use (next)->
+  try
+    yield next
+  catch e
+    console.error e.stack
+    @body = e
+    @status = 500
+
 api.get "/service", ->
   @body = yield Service.aggregate().group(
     _id: "$env"
