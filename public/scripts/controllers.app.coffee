@@ -19,7 +19,8 @@ module.controller 'AppInfoCtrl', ($scope,$routeParams,$modal,$location,Page,Serv
   $scope.reload = ->
     data = Service.get({env:$scope.env,app:$scope.app})
     data.$promise.then ->
-      $scope.config = data
+      $scope.original_config = data
+      $scope.resetConfig()
 
     Etcd.get("/docker/apps/#{$scope.env}/#{$scope.app}").then (data)->
       $scope.instances = _.compact data.map (x)->
@@ -34,6 +35,7 @@ module.controller 'AppInfoCtrl', ($scope,$routeParams,$modal,$location,Page,Serv
   $scope.reload()
   $scope.$parent.reload = $scope.reload
 
+  $scope.resetConfig = -> $scope.config = angular.copy $scope.original_config
   $scope.deleteApp = ->
     m = $modal.open
       resolve:

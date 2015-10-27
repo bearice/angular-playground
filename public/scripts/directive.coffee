@@ -39,14 +39,11 @@ module.directive 'selectServer', ->
     $scope.model = [] if $scope.model is undefined
     $scope.selected = []
     $scope.sync = ->
-      $scope.model = if $scope.selected.length is 0
-        null
-      else
-        x.Name for x in $scope.selected
+      s = (x.Name for x in $scope.selected)
+      $scope.model.splice 0,$scope.model.length,s...
 
   link: (scope,elem,attr,ctrl)->
-    scope.$watch 'model', (val)->ctrl.$setViewValue val
-    scope.$watch 'list', ->
+    scope.$watchGroup ['list','model'], ->
       scope.list.forEach (x)->
         x.selected = scope.model.indexOf(x.Name)>=0
         console.info x.Name,x.selected
@@ -86,6 +83,13 @@ module.directive 'appEditor', ->
       $scope.isLoading = false
 
   link: ($scope, $element, $attrs, ngModel)->
+    $scope.$watch 'data', ->
+      $scope.hosts = $scope.data.options.hosts
+      $scope.overrideImage = $scope.data.image isnt undefined
+
+    $scope.$watch 'hosts', ->
+      $scope.data.options.hosts = $scope.hosts
+
     $scope.$watch 'overrideImage', ->
       if $scope.overrideImage
         $scope.data.image = $scope.customImage
