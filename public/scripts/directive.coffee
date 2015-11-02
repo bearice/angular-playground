@@ -114,6 +114,7 @@ module.directive 'volumeList', ->
       console.info 'data changed:', n, o
   controller: ($scope)->
     $scope.addItem = ->
+      $scope.data = [] if $scope.data is undefined
       $scope.data.push {}
 
     $scope.delItem = (index)->
