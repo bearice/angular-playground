@@ -1,0 +1,24 @@
+.panel.panel-default
+  table.table
+    thead
+      tr
+        th Host Path
+        th Container Path
+        th
+    tfoot
+      tr
+        td.text-right(colspan="3")
+          button.btn.btn-success.btn-sm(ng-click="addItem()")
+            span.glyphicon.glyphicon-plus
+            | Add
+    tbody
+      tr(ng-repeat="e in data")
+        td
+          input.form-control.input-sm(ng-model="e.host" required)
+        td
+          input.form-control.input-sm(ng-model="e.container" required)
+        td
+          button.btn.btn-danger.btn-sm(ng-click="delItem($index)")
+            span.glyphicon.glyphicon-remove
+            | Remove
+

@@ -30,6 +30,7 @@
     "bootstrap": "~3.3.4",
     "isteven-angular-multiselect": "angular-multi-select#~4.0.0",
     "json-formatter": "~0.4.0",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "angular-ui-grid": "~3.0.7"
   }
 }

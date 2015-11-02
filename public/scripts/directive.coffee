@@ -46,7 +46,6 @@ module.directive 'selectServer', ->
     scope.$watchGroup ['list','model'], ->
       scope.list.forEach (x)->
         x.selected = scope.model.indexOf(x.Name)>=0
-        console.info x.Name,x.selected
 
 module.directive 'appEditor', ->
   restrict: 'E',
@@ -103,4 +102,20 @@ module.directive 'appEditor', ->
 
     $scope.$watchGroup ['data.env','data.app'], ()->
       $scope.customImage = "docker.jimubox.com/#{$scope.data.env}/#{$scope.data.app}:latest" unless $scope.overrideImage
+
+module.directive 'volumeList', ->
+  restrict: 'E',
+  require: 'ngModel',
+  scope:
+    data:'=ngModel'
+  templateUrl: 'public/templates/volume-list.html'
+  link: (scope, element, attrs, ctrl)->
+    scope.$watch 'data', (n,o)->
+      console.info 'data changed:', n, o
+  controller: ($scope)->
+    $scope.addItem = ->
+      $scope.data.push {}
+
+    $scope.delItem = (index)->
+      $scope.data.splice index,1
 

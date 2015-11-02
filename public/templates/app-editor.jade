@@ -32,4 +32,9 @@
               input(type="checkbox" ng-model="overrideImage")
             input.form-control(type="text" ng-model="customImage" placeholder="Image" ng-readonly="!overrideImage" required)
 
+      .form-group
+        label.control-label.col-sm-2 Extra Volumes:
+        .col-sm-10
+          volume-list(ng-model="data.options.volumes")
+
 pre.col-md-4 {{data|json}}

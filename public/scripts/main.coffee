@@ -4,12 +4,13 @@ module = angular.module 'daikon',[
   'ngAnimate',
   'ngResource',
   'ui.bootstrap',
+  'ui.grid',
   'angular.filter',
   'tableSort',
   'jsonFormatter',
   'angularMoment',
   'angular-loading-bar',
-  'isteven-multi-select'
+  'isteven-multi-select',
 ]
 
 module.constant 'config',
